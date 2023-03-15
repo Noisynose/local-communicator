@@ -1,34 +1,29 @@
-import { useState } from "react";
+import { AuthenticatedApp } from "./AuthenticatedApp";
+import { useAuthentication } from "./authentication/AuthenticationProvider";
+import { useEffect } from "react";
+import { UnauthorizedApp } from "./UnauthorizedApp";
 
-type Message = string;
+export const App = () => {
+  const { user, login } = useAuthentication();
 
-const App = () => {
-  const [currentMessage, setCurrentMessage] = useState<Message>('');
-  const [chat, addMessage] = useState<Message[]>([]);
+  useEffect(() => {
+    login();
+  }, []);
 
-  const sendMessage = (message: Message) => {
-    addMessage([...chat, message]);
-    setCurrentMessage('');
+  const findAppState = () => {
+    switch(user.tag) {
+      case 'authenticated':
+        return <AuthenticatedApp />;
+      case 'unauthorized':
+        return <UnauthorizedApp />;
+      case 'unauthenticated':
+        return <p>Loading...</p>;
+    }
   }
 
   return (
-    <div>
-      <h1>Local communicator</h1>
-      <div>
-        <ul>
-          {chat.map((message, index) => {
-            return (
-              <li key={index}>{message}</li>
-            )
-          })}
-        </ul>
-      </div>
-      <div>
-        <input value={currentMessage} onChange={(event) => setCurrentMessage(event.target.value)} />
-        <button onClick={() => sendMessage(currentMessage)} >Send!</button>
-      </div>
-    </div>
-  )
+    <>
+      {findAppState()}
+    </>
+  );
 }
-
-export default App
