@@ -3,7 +3,7 @@ import { useRoom } from "./chat-rooms/useRoom";
 
 export const AuthenticatedApp = () => {
   const [currentMessage, setCurrentMessage] = useState<string>('');
-  const { messages, send: sendMessage } = useRoom();
+  const { messages, send } = useRoom();
 
   return (
     <div>
@@ -19,7 +19,7 @@ export const AuthenticatedApp = () => {
       </div>
       <div>
         <input value={currentMessage} onChange={(event) => setCurrentMessage(event.target.value)} />
-        <button onClick={() => sendMessage(currentMessage)} >Send!</button>
+        <button onClick={() => send(currentMessage)} >Send!</button>
       </div>
     </div>
   )
