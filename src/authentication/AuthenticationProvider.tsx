@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { anonymousLogin } from './FirebaseConfig';
+import { anonymousLogin } from './AuthenticationConfig';
 import { unauthenticatedUser, User } from './User';
 
 type AuthContext = {
