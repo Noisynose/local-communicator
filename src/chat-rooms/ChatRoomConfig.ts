@@ -23,7 +23,7 @@ export const getMessages = ({ callback }: GetMessagesUsecase) => {
               id: doc.id,
               ...doc.data(),
           }));
-          callback(messages as Message[]);
+          callback(messages.map(Message.fromDatastore));
       }
   );
 }
