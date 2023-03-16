@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useRoom } from "./chat-rooms/useRoom";
 
-type Message = string;
-
 export const AuthenticatedApp = () => {
-  const [currentMessage, setCurrentMessage] = useState<Message>('');
-  const { messages, sendMessage } = useRoom();
+  const [currentMessage, setCurrentMessage] = useState<string>('');
+  const { messages, send: sendMessage } = useRoom();
 
   return (
     <div>
@@ -21,7 +19,7 @@ export const AuthenticatedApp = () => {
       </div>
       <div>
         <input value={currentMessage} onChange={(event) => setCurrentMessage(event.target.value)} />
-        <button onClick={() => sendMessage()} >Send!</button>
+        <button onClick={() => sendMessage(currentMessage)} >Send!</button>
       </div>
     </div>
   )

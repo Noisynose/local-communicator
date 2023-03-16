@@ -1,12 +1,21 @@
 import { db } from "../FirebaseConfig";
-import { onSnapshot, query, collection, orderBy } from "firebase/firestore";
+import { onSnapshot, query, collection, orderBy, addDoc, serverTimestamp } from "firebase/firestore";
+import { Message } from "./Message";
 
-export const getMessages = (callback: any) => {
-  const room = 'global';
+const root = 'rooms';
+const room = 'global';
+const historic = 'messages';
 
+const getCollection = () => collection(db, root, room, historic);
+
+type GetMessagesUsecase = {
+    callback: (messages: Message[]) => void,
+}
+
+export const getMessages = ({ callback }: GetMessagesUsecase) => {
   return onSnapshot(
       query(
-          collection(db, 'rooms', room, 'messages'),
+          getCollection(),
           orderBy('time', 'asc')
       ),
       (querySnapshot) => {
@@ -14,7 +23,29 @@ export const getMessages = (callback: any) => {
               id: doc.id,
               ...doc.data(),
           }));
-          callback(messages);
+          callback(messages as Message[]);
       }
   );
+}
+
+type SendMessageUsecase = {
+    username: Message['author'],
+    message: Message['message'],
+}
+
+export const sendMessage = async ({ message, username }: SendMessageUsecase): Promise<void> => {
+    const documentToAdd = {
+        message: message.trim(),
+        author: username,
+        time: serverTimestamp(),
+    };
+
+    try {
+        await addDoc(
+            getCollection(),
+            documentToAdd,
+        );
+    } catch (error) {
+        console.error(error);
+    }
 }

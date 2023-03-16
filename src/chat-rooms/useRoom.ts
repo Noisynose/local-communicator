@@ -1,29 +1,25 @@
 import React, { useEffect } from 'react';
-import { getMessages } from './ChatRoomConfig';
-
-type Message = {
-    id: string,
-    message: string,
-    author: string,
-    time: Date,
-}
+import { useAuthentication } from '../authentication/AuthenticationProvider';
+import { getMessages, sendMessage } from './ChatRoomConfig';
+import { Message } from './Message';
 
 type RoomUsecase = {
     messages: Message[],
-    sendMessage: () => void,
+    send: (message: Message['message']) => void,
 }
 
 export const useRoom = (): RoomUsecase => {
     const [messages, setMessages] = React.useState<Message[]>([]);
+    const { username } = useAuthentication();
 
     useEffect(() => {
-        const unsubscribe = getMessages(setMessages);
+        const unsubscribe = getMessages({callback: setMessages});
         return unsubscribe;
     }, []);
 
-    const sendMessage = (): void => {
-        console.log('sup!');
+    const send = (message: string): void => {
+        sendMessage({ username, message });
     }
 
-    return { messages, sendMessage };
+    return { messages, send };
 }
