@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { UnauthorizedApp } from "./UnauthorizedApp";
 import { ChakraProvider } from '@chakra-ui/react';
 import { ColorModeScript } from '@chakra-ui/react';
-import * as theme from '@/theme';
+import theme from '@/theme';
 
 
 export const App = () => {
@@ -26,7 +26,7 @@ export const App = () => {
   }
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       {findAppState()}
     </ChakraProvider>

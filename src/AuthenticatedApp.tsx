@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ChatRoom, UserValidation } from "./components";
-import { useDisclosure } from '@chakra-ui/react'
+import { useDisclosure, Button, Box } from '@chakra-ui/react'
 
 
 export const AuthenticatedApp = () => {
@@ -10,11 +10,13 @@ export const AuthenticatedApp = () => {
     onOpen()
   }, [])
 
-
   return (
     <div>
       <UserValidation isOpen={isOpen} onClose={onClose} />
       <ChatRoom />
+      <Box textAlign="center">
+        <Button onClick={onOpen}>Change name</Button>
+      </Box>
     </div>
   )
 }

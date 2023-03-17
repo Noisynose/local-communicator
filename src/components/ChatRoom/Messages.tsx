@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect } from 'react';
-import { Avatar, Text, Flex, Box, Tooltip } from '@chakra-ui/react'
+import { Text, Flex, Box, Tooltip, useColorModeValue } from '@chakra-ui/react'
 import { useRoom } from "@/chat-rooms/useRoom";
 import { format } from 'timeago.js';
+import { UserAvatar } from '.';
 
 const MessageFromMe = ({ message }) => (
   <Flex w="100%" justify="flex-end">
@@ -28,31 +29,30 @@ const AlwaysScrollToBottom = () => {
 const Message = () => {
   const { messages } = useRoom();
 
+  const bg = useColorModeValue('blue.100', 'blue.900')
+  const color = useColorModeValue('black', 'gray.100')
+
+
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => (
         <Flex key={index} w="100%">
-          <Avatar
-            name="Computer"
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-            bg="blue.300"
-          ></Avatar>
+          <UserAvatar name={item.author}/>
           <Box
-            bg="gray.100"
-            color="black"
+            bg={bg}
+            color={color}
             minW="100px"
             maxW="90%"
             my="1"
             p="3"
+            borderRadius="3px"
           >
-
-              <Flex>
+            <Flex>
               <Text fontSize="lg" as="b">{item.author}</Text>
               <Tooltip label={`${item.time.toLocaleDateString()} ${item.time.toLocaleTimeString()}`}>
                 <Text fontSize="xs" lineHeight="2.5" marginLeft="5px">{format(item.time)}</Text>
-            </Tooltip>
-
-              </Flex>
+              </Tooltip>
+            </Flex>
             <Text>{item.message}</Text>
           </Box>
         </Flex>
