@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect } from 'react';
-import { Avatar, Text, Flex, Box } from '@chakra-ui/react'
+import { Avatar, Text, Flex, Box, Tooltip } from '@chakra-ui/react'
 import { useRoom } from "@/chat-rooms/useRoom";
+import { format } from 'timeago.js';
 
 const MessageFromMe = ({ message }) => (
   <Flex w="100%" justify="flex-end">
@@ -44,11 +45,14 @@ const Message = () => {
             my="1"
             p="3"
           >
-            <Flex>
-              <Text fontSize="lg" as="b">{item.author}</Text>
-              <Text fontSize="xs">{item.time.toString()}</Text>
 
-            </Flex>
+              <Flex>
+              <Text fontSize="lg" as="b">{item.author}</Text>
+              <Tooltip label={`${item.time.toLocaleDateString()} ${item.time.toLocaleTimeString()}`}>
+                <Text fontSize="xs" lineHeight="2.5" marginLeft="5px">{format(item.time)}</Text>
+            </Tooltip>
+
+              </Flex>
             <Text>{item.message}</Text>
           </Box>
         </Flex>
