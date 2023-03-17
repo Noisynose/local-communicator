@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useCallback } from 'react';
 import { Flex,Input,Button  } from '@chakra-ui/react'
-import { useRoom } from '../chat-rooms/useRoom';
+import { useRoom } from '@/chat-rooms/useRoom';
 
 const TextInput = ({}) => {
   const [currentMessage, setCurrentMessage] = useState<string>('');

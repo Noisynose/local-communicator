@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect } from 'react';
-import { Avatar, Text, Flex } from '@chakra-ui/react'
-import { useRoom } from "../chat-rooms/useRoom";
+import { Avatar, Text, Flex, Box } from '@chakra-ui/react'
+import { useRoom } from "@/chat-rooms/useRoom";
 
-const MessageFromMe = ({message}) => (
+const MessageFromMe = ({ message }) => (
   <Flex w="100%" justify="flex-end">
       <Flex
         bg="black"
@@ -36,16 +36,21 @@ const Message = () => {
             src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
             bg="blue.300"
           ></Avatar>
-          <Flex
+          <Box
             bg="gray.100"
             color="black"
             minW="100px"
-            maxW="350px"
+            maxW="90%"
             my="1"
             p="3"
           >
-            <Text><pre>{JSON.stringify(item, null, 2)}</pre></Text>
-          </Flex>
+            <Flex>
+              <Text fontSize="lg" as="b">{item.author}</Text>
+              <Text fontSize="xs">{item.time.toString()}</Text>
+
+            </Flex>
+            <Text>{item.message}</Text>
+          </Box>
         </Flex>
       ))}
   	 <AlwaysScrollToBottom />

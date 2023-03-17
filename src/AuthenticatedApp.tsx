@@ -1,20 +1,19 @@
-import { useState } from "react";
-import { useAuthentication } from "./authentication/AuthenticationProvider";
-import { useRoom } from "./chat-rooms/useRoom";
-import { ChatRoom } from "./components";
+import { useEffect } from "react";
+import { ChatRoom, UserValidation } from "./components";
+import { useDisclosure } from '@chakra-ui/react'
 
-type Message = string;
 
 export const AuthenticatedApp = () => {
-  const { username, rename } = useAuthentication();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  useEffect(() => {
+    onOpen()
+  }, [])
+
 
   return (
     <div>
-      <h1>Local communicator</h1>
-      <div>
-        <label>Connected as :</label>
-        <input onChange={(event) => rename(event.target.value)} value={username} />
-      </div>
+      <UserValidation isOpen={isOpen} onClose={onClose} />
       <ChatRoom />
     </div>
   )
