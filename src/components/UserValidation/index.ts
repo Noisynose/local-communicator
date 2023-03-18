@@ -1,1 +1,1 @@
-export { default as UserValidation } from '.'
+export { default as UserValidation } from './UserValidation'

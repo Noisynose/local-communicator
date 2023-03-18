@@ -6,7 +6,7 @@ export type MessageAttributes = {
 }
 
 export class Message {
-  private constructor(private id: string, private message: string, private author: string, private time: Date) {}
+  private constructor(private id: string, public message: string, public author: string, public time: Date) {}
 
   writtenBy = (author: string): boolean => {
     return this.author === author;
