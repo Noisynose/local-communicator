@@ -5,6 +5,7 @@ import { useRoom } from "@/chat-rooms/useRoom";
 import { format } from 'timeago.js';
 import { UserAvatar } from '.';
 
+/*
 const MessageFromMe = ({ message }) => (
   <Flex w="100%" justify="flex-end">
       <Flex
@@ -18,16 +19,21 @@ const MessageFromMe = ({ message }) => (
       <Text>{message.text}</Text>
       </Flex>
   </Flex>
-)
+)*/
 
 const AlwaysScrollToBottom = () => {
-  const elementRef = useRef();
-  useEffect(() => elementRef.current.scrollIntoView());
+  const elementRef = React.useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (elementRef.current) {
+      elementRef.current.scrollIntoView()
+    }
+  });
   return <div ref={elementRef} />;
 };
 
+
 const Message = () => {
-  const { messages } = useRoom();
+  const { messages } = useRoom()
 
   const bg = useColorModeValue('blue.100', 'blue.900')
   const color = useColorModeValue('black', 'gray.100')
