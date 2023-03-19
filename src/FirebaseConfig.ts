@@ -14,5 +14,5 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const messaging = getMessaging(app);
-export const messagingToken = await getToken(messaging, { vapidKey: "BEInAdOM3O9QPU5RVxJDmq1T44goFYmq53LjUBCq2JhXaeHla6tClZdFCjF0gLrDMSodvdkCmqrGmcY7Y78s9_U" });
-console.log(messagingToken);
+// export const messagingToken = await getToken(messaging, { vapidKey: "BEInAdOM3O9QPU5RVxJDmq1T44goFYmq53LjUBCq2JhXaeHla6tClZdFCjF0gLrDMSodvdkCmqrGmcY7Y78s9_U" });
+// console.log(messagingToken);
