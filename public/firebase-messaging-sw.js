@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
+importScripts('https://www.gstatic.com/firebasejs/9.17.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.17.0/firebase-messaging-compat.js');
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6ZNSwd75_PfHXRtdI8a_TD4B7GBwA_V0",
