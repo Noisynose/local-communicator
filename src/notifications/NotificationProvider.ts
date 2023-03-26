@@ -14,7 +14,6 @@ export const useNotification = (): NotificationUsecase => {
             .then((token) => {
                 setAllowNotifications(token);
                 NotificationSubscriptionConfig.subscribe({ deviceToken: token });
-                console.log('token', token);
             })
             .catch((reason) => {
                 setAllowNotifications(undefined);
