@@ -28,7 +28,7 @@ exports.sendNotifications = functions
         targets.push(notification.target);
       });
 
-      functions.logger.info({payload, targets});
+      functions.logger.info({payload, targets, notificationTokens});
 
       if (targets.length > 0) {
         messaging.sendToDevice(targets, payload);
