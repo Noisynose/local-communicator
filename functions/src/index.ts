@@ -14,24 +14,18 @@ exports.sendNotifications = functions
     async (snapshot) => {
       const {author, message} = snapshot.data();
 
-      const payload = {
-        notification: {
-          title: `${author} sent a new message!`,
-          body: message?.substr(0, 50) ?? "",
-        },
+      const notification = {
+        title: `${author} sent a new message!`,
+        body: message?.substr(0, 50) ?? "",
       };
 
-      const targets: string[] = [];
-      const notificationTokens =
+      const tokensSnapshot =
         await db.collection("notification-tokens").get();
-      notificationTokens.forEach((notification: any) => {
-        targets.push(notification.target);
+
+      tokensSnapshot.forEach((document) => {
+        const {target} = document.data();
+
+        messaging.send({token: target, notification});
       });
-
-      functions.logger.info({payload, targets, notificationTokens});
-
-      if (targets.length > 0) {
-        messaging.sendToDevice(targets, payload);
-      }
     }
   );
