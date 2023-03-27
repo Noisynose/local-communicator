@@ -1,6 +1,6 @@
 {
-  "name": "Name of your app",
-  "short_name": "Name of your app",
+  "name": "Chat Rooms",
+  "short_name": "CR",
   "icons": [
     {
       "src": "/maskable_icon.png",
@@ -33,5 +33,5 @@
   "background_color": "#eab308",
   "display": "standalone",
   "scope": "/",
-  "start_url": "localhost:4173"
+  "start_url": "chat-rooms-40341--pr7-pwa-rg2popme.web.app"
 }
