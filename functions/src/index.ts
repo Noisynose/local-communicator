@@ -19,13 +19,19 @@ exports.sendNotifications = functions
         body: message?.substr(0, 50) ?? "",
       };
 
+      const webpush = {
+        fcmOptions: {
+          link: "https://chat-rooms-40341.web.app/"
+        }
+      }
+
       const tokensSnapshot =
         await db.collection("notification-tokens").get();
 
       tokensSnapshot.forEach((document) => {
         const {target} = document.data();
 
-        messaging.send({token: target, notification});
+        messaging.send({token: target, notification, webpush });
       });
     }
   );
