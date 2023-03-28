@@ -45,7 +45,7 @@ const Message = () => {
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => (
         <Flex key={index} w="100%" justify={item.writtenBy(username) ? 'end' : 'initial'}>
-          <UserAvatar name={item.author}/>
+          {!item.writtenBy(username) && <UserAvatar name={item.author}/>}
           <Box
             bg={bg}
             color={color}
@@ -63,6 +63,7 @@ const Message = () => {
             </Flex>
             <Text>{item.message}</Text>
           </Box>
+          {item.writtenBy(username) && <UserAvatar name={item.author}/>}
         </Flex>
       ))}
   	 <AlwaysScrollToBottom />
