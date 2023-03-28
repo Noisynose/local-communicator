@@ -1,5 +1,5 @@
 import { db } from "../FirebaseConfig";
-import { onSnapshot, query, collection, orderBy, addDoc, serverTimestamp, FieldValue } from "firebase/firestore";
+import { onSnapshot, query, collection, orderBy, addDoc, serverTimestamp, FieldValue, limitToLast } from "firebase/firestore";
 import { Message } from "./Message";
 
 const root = 'rooms';
@@ -16,7 +16,8 @@ export const getMessages = ({ callback }: GetMessagesUsecase) => {
   return onSnapshot(
       query(
           getCollection(),
-          orderBy('time', 'asc')
+          orderBy('time', 'asc'),
+          limitToLast(30),
       ),
       (querySnapshot) => {
           const messages = querySnapshot.docs.map((doc) => ({
