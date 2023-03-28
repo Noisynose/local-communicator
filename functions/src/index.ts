@@ -21,9 +21,9 @@ exports.sendNotifications = functions
 
       const webpush = {
         fcmOptions: {
-          link: "https://chat-rooms-40341.web.app/"
-        }
-      }
+          link: "https://chat-rooms-40341.web.app/",
+        },
+      };
 
       const tokensSnapshot =
         await db.collection("notification-tokens").get();
@@ -31,7 +31,7 @@ exports.sendNotifications = functions
       tokensSnapshot.forEach((document) => {
         const {target} = document.data();
 
-        messaging.send({token: target, notification, webpush });
+        messaging.send({token: target, notification, webpush});
       });
     }
   );
