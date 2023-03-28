@@ -11,7 +11,7 @@ type AuthContext = {
     rename: (name: string) => void,
 }
 
-const defaultUsername = 'Anonymous';
+export const defaultUsername = 'Anonymous';
 const usernameKey = 'hackerman-chat-username';
 
 export const AuthenticationContext = React.createContext<AuthContext | undefined>(undefined);
@@ -34,7 +34,7 @@ export const AuthenticationProvider: React.FC<{ children: JSX.Element }> = ({ ch
     }
 
     const rename = (name: string) => {
-        const newName = name.length > 0 ? name : defaultUsername;
+        const newName = name.trim() !== '' ? name : defaultUsername;
         setUsername(newName);
         savePersistedUsername(newName);
     }
