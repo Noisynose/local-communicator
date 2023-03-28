@@ -4,6 +4,7 @@ import { Text, Flex, Box, Tooltip, useColorModeValue } from '@chakra-ui/react'
 import { useRoom } from "@/chat-rooms/useRoom";
 import { format } from 'timeago.js';
 import { UserAvatar } from '.';
+import { useAuthentication } from '@/authentication/AuthenticationProvider';
 
 /*
 const MessageFromMe = ({ message }) => (
@@ -34,6 +35,7 @@ const AlwaysScrollToBottom = () => {
 
 const Message = () => {
   const { messages } = useRoom()
+  const { username } = useAuthentication()
 
   const bg = useColorModeValue('blue.100', 'blue.900')
   const color = useColorModeValue('black', 'gray.100')
@@ -42,7 +44,7 @@ const Message = () => {
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => (
-        <Flex key={index} w="100%">
+        <Flex key={index} w="100%" justify={item.writtenBy(username) ? 'end' : 'initial'}>
           <UserAvatar name={item.author}/>
           <Box
             bg={bg}
