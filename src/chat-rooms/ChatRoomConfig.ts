@@ -1,5 +1,5 @@
 import { db } from "../FirebaseConfig";
-import { onSnapshot, query, collection, orderBy, addDoc, serverTimestamp } from "firebase/firestore";
+import { onSnapshot, query, collection, orderBy, addDoc, serverTimestamp, FieldValue } from "firebase/firestore";
 import { Message } from "./Message";
 
 const root = 'rooms';
@@ -33,14 +33,22 @@ type SendMessageUsecase = {
     message: Message['message'],
 }
 
+type MessageDocument = {
+    message: string,
+    author: string,
+    time: FieldValue,
+}
+
 export const sendMessage = async ({ message, username }: SendMessageUsecase): Promise<void> => {
-    const documentToAdd = {
+    const documentToAdd: MessageDocument = {
         message: message.trim(),
-        author: username,
+        author: username.trim(),
         time: serverTimestamp(),
     };
 
     try {
+        isDocumentValid(documentToAdd);
+
         await addDoc(
             getCollection(),
             documentToAdd,
@@ -49,3 +57,13 @@ export const sendMessage = async ({ message, username }: SendMessageUsecase): Pr
         console.error(error);
     }
 }
+
+const isDocumentValid = ({ message, author }: MessageDocument): boolean | never => {
+    if (!message) {
+        throw new Error('Message cannot be empty');
+    }
+    if (!author) {
+        throw new Error('Author cannot be empty');
+    }
+    return true;
+};
