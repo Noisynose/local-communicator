@@ -2,24 +2,30 @@ import { initializeMessaging } from "@/FirebaseConfig";
 import { useEffect, useState } from "react";
 import NotificationSubscriptionConfig from "./NotificationSubscriptionConfig";
 
+type NotificationState = 'default' | 'granted' | 'denied';
+
 type NotificationUsecase = {
-    allowNotifications: string | undefined;
+    allowNotifications: NotificationState;
+    requestNotification: () => void;
 };
 
 export const useNotification = (): NotificationUsecase => {
-    const [allowNotifications, setAllowNotifications] = useState<string | undefined>();
+    const [allowNotifications, setAllowNotifications] = useState<NotificationState>(Notification.permission);
+    const [triggerable, setTriggerable] = useState<boolean>(true);
 
     useEffect(() => {
         initializeMessaging()
             .then((token) => {
-                setAllowNotifications(token);
+                setAllowNotifications(Notification.permission);
                 NotificationSubscriptionConfig.subscribe({ deviceToken: token });
             })
-            .catch((reason) => {
-                setAllowNotifications(undefined);
-                console.log('Disabled notifications', reason);
+            .catch(() => {
+                setAllowNotifications(Notification.permission);
             })
-    }, []);
+    }, [triggerable]);
 
-    return { allowNotifications };
+    return { 
+        allowNotifications,
+        requestNotification: () => setTriggerable(!triggerable),
+    };
 }

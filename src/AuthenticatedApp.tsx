@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { ChatRoom, UserValidation } from "./components";
 import { useDisclosure, Button, Box } from '@chakra-ui/react'
-import { useNotification } from "./notifications/NotificationProvider";
+import NotificationButton from "./notifications/NotificationButton";
 
 
 export const AuthenticatedApp = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { allowNotifications } = useNotification()
 
   useEffect(() => {
     onOpen()
@@ -18,7 +17,7 @@ export const AuthenticatedApp = () => {
       <ChatRoom />
       <Box textAlign="center">
         <Button onClick={onOpen}>Change name</Button>
-        {allowNotifications ? 'While in background, notifications will be sent to this device.' : 'Notifications disabled'}
+        <NotificationButton />
       </Box>
     </div>
   )
